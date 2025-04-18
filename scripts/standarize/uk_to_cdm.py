@@ -1,9 +1,16 @@
 import pandas as pd
+import sys
 import os
 
+# Agrega la raíz del proyecto al sys.path
+project_root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..'))
+sys.path.append(project_root)
+
+from scripts.standarize.helpers.encoding_utils import read_csv_utf8_cleaned
 # Cargar los datos
-accidents = pd.read_csv("data/UK/Accident_Information.csv", low_memory=False)
-vehicles = pd.read_csv("data/UK/Vehicle_Information.csv", low_memory=False)
+# Usa el helper en vez de pd.read_csv directamente
+accidents = read_csv_utf8_cleaned("data/raw/uk/Accident_Information.csv")
+vehicles = read_csv_utf8_cleaned("data/raw/uk/Vehicle_Information.csv")
 
 # Convertir columnas de fecha y hora
 accidents["Date"] = pd.to_datetime(accidents["Date"], errors="coerce")
@@ -77,4 +84,4 @@ accidents_cdm.to_csv("data/standarized/uk/accidents_cdm.csv", index=False)
 vehicles_cdm.to_csv("data/standarized/uk/vehicles_cdm.csv", index=False)
 persons_cdm.to_csv("data/standarized/uk/persons_cdm.csv", index=False)
 
-print("Conversión completada. Archivos guardados en data/CDM/")
+print("Conversión completada. Archivos guardados en data/standarized/uk/")

@@ -6,5 +6,5 @@ __pycache__/
 .DS_Store
 *.pbix
 
-# Ignorar datasets crudos por tamaño
-data/raw/
+# Ignorar datasets por tamaño
+data/
